@@ -1,0 +1,2 @@
+class ProponentsController < ApplicationController
+end
