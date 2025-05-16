@@ -1,0 +1,13 @@
+h1 Proponent created
+
+p
+  strong Name:
+  = @proponent.name
+
+p
+  strong Salary:
+  = number_to_currency(@proponent.salary)
+
+p
+  strong INSS Discount:
+  = number_to_currency(@proponent.inss_discount)
