@@ -5,4 +5,6 @@ Rails.application.routes.draw do
 
   resources :proponents, only: [:new, :create, :show]
 
+  get 'inss_discount', to: 'inss#calculate'
+
 end
