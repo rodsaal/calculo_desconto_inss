@@ -3,7 +3,7 @@
     .col-md-8
       h1.mb-4 Novo Proponente
 
-      = form_with model: @proponent, local: true do |f|
+      = form_with model: @proponent, local: true, data: { controller: "inss" } do |f|
         .mb-3
           = f.label :name, "Nome", class: "form-label"
           = f.text_field :name, class: "form-control"
@@ -18,7 +18,13 @@
 
         .mb-3
           = f.label :salary, "Salário", class: "form-label"
-          = f.number_field :salary, step: 0.01, class: "form-control", id: "salary-input"
+          = f.number_field :salary, step: 0.01, class: "form-control", id: "salary-input", data: { inss_target: "salary", action: "input->inss#calculate" }
+
+
+        .mb-3
+          label INSS descontado:
+          #inss-result.text-muted data-inss-target="result" R$ 0,00
+
 
         hr
         h4.mt-4.mb-3 Endereço
