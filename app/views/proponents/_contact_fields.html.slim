@@ -1,0 +1,7 @@
+.mb-3
+  = f.label :contact_type, "Tipo de Contato", class: "form-label"
+  = f.select :contact_type, ['residencial', 'celular', 'whatsapp', 'email'], {}, class: "form-select"
+
+.mb-3
+  = f.label :value, "Valor", class: "form-label"
+  = f.text_field :value, class: "form-control"
