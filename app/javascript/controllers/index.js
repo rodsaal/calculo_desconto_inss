@@ -9,3 +9,6 @@ application.register("hello", HelloController)
 
 import InssController from "./inss_controller"
 application.register("inss", InssController)
+
+import NestedFormController from "./nested_form_controller"
+application.register("nested-form", NestedFormController)

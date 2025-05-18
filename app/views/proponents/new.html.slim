@@ -27,43 +27,46 @@
 
 
         hr
-        h4.mt-4.mb-3 Endereço
+        h4.mt-4.mb-3 Endereços
 
-        = f.fields_for :addresses do |a|
-          .mb-3
-            = a.label :street, "Rua", class: "form-label"
-            = a.text_field :street, class: "form-control"
+        div data-controller="nested-form"
+          div data-nested-form-target="container"
+            = f.fields_for :addresses do |a|
+              div class="nested-address mb-3"
+                = render partial: "address_fields", locals: { f: a }
+                
 
-          .mb-3
-            = a.label :number, "Número", class: "form-label"
-            = a.text_field :number, class: "form-control"
+          div.mt-3
+            button.btn.btn-secondary type="button" data-action="click->nested-form#add_association"
+              | Adicionar Endereço
 
-          .mb-3
-            = a.label :neighborhood, "Bairro", class: "form-label"
-            = a.text_field :neighborhood, class: "form-control"
 
-          .mb-3
-            = a.label :city, "Cidade", class: "form-label"
-            = a.text_field :city, class: "form-control"
-
-          .mb-3
-            = a.label :state, "Estado", class: "form-label"
-            = a.text_field :state, class: "form-control"
-
-          .mb-3
-            = a.label :zip_code, "CEP", class: "form-label"
-            = a.text_field :zip_code, class: "form-control"
+          template data-nested-form-target="template"
+            = f.fields_for :addresses, Address.new, child_index: "NEW_RECORD" do |a|
+              div class="nested-address mt-3"
+              hr.mt-3
+                = render partial: "address_fields", locals: { f: a }
 
         hr
-        h4.mt-4.mb-3 Contato
+        
+        h4.mt-4.mb-3 Contatos
 
-        = f.fields_for :contacts do |c|
-          .mb-3
-            = c.label :contact_type, "Tipo de Contato", class: "form-label"
-            = c.select :contact_type, ['residencial', 'celular', 'whatsapp', 'email'], {}, class: "form-select"
+        div data-controller="nested-form"
+          div data-nested-form-target="container"
+            = f.fields_for :contacts do |c|
+              div class="nested-contact mb-3"
+                = render partial: "contact_fields", locals: { f: c }
 
-          .mb-3
-            = c.label :value, "Valor", class: "form-label"
-            = c.text_field :value, class: "form-control"
+          div.mt-3
+            button.btn.btn-secondary type="button" data-action="click->nested-form#add_association"
+              | Adicionar Contato
+
+
+          template data-nested-form-target="template"
+            = f.fields_for :contacts, Contact.new, child_index: "NEW_RECORD" do |c|
+              div class="nested-contact mt-3"
+                hr.mt-3
+                = render partial: "contact_fields", locals: { f: c }
+
 
         = f.submit "Cadastrar Proponente", class: "btn btn-primary mt-4 mb-5 w-100"
