@@ -57,5 +57,41 @@ RSpec.describe "Proponents", type: :request do
 
       expect(response.body).to include("proponent")
     end
+
+    it "creates a proponent with multiple addresses and contacts" do
+      params = {
+        proponent: {
+          name: "João da Silva",
+          document: "98765432100",
+          birthdate: "1985-03-01",
+          salary: 4500.00,
+          addresses_attributes: [
+            {
+              street: "Rua A", number: "10", neighborhood: "Bairro A",
+              city: "Cidade A", state: "SP", zip_code: "01000-000"
+            },
+            {
+              street: "Rua B", number: "20", neighborhood: "Bairro B",
+              city: "Cidade B", state: "RJ", zip_code: "20000-000"
+            }
+          ],
+          contacts_attributes: [
+            { contact_type: "celular", value: "99999-9999" },
+            { contact_type: "email", value: "joao@example.com" }
+          ]
+        }
+      }
+
+      expect {
+        post proponents_path, params: params
+      }.to change(Proponent, :count).by(1)
+      .and change(Address, :count).by(2)
+      .and change(Contact, :count).by(2)
+
+      proponent = Proponent.last
+      expect(proponent.addresses.map(&:city)).to include("Cidade A", "Cidade B")
+      expect(proponent.contacts.map(&:contact_type)).to include("celular", "email")
+    end
+
   end
 end
