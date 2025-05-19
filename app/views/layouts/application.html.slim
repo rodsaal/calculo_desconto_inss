@@ -15,7 +15,17 @@ html
           | Logado como:
           = current_user.email
           = link_to "Sair", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger btn-sm ms-2", data: { turbo_method: :delete }
-      -# removido para não mostrar o botão "Entrar" na tela de login
+      -#
+
+      - flash.each do |key, message|
+        - if key == "notice"
+          - alert_class = "alert alert-success"
+        - elsif key == "alert"
+          - alert_class = "alert alert-danger"
+        - else
+          - alert_class = "alert alert-info"
+        div class=alert_class role="alert"
+          = message
 
 
 

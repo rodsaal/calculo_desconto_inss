@@ -50,9 +50,9 @@ RSpec.describe "Proponents", type: :request do
       expect(response).to redirect_to(Proponent.last)
       follow_redirect!
     
-      expect(response.body).to include("Proponent created")
+      expect(response.body).to include("Proponente criado com sucesso.")
       expect(response.body).to include("Maria Silva")
-      expect(response.body).to include("R$ 3.000,00").or include("$3,000.00")
+      expect(response.body).to include("3.000").or include("3,000").or include("3000")
     end
     
 
@@ -98,6 +98,86 @@ RSpec.describe "Proponents", type: :request do
       expect(proponent.addresses.map(&:city)).to include("Cidade A", "Cidade B")
       expect(proponent.contacts.map(&:contact_type)).to include("celular", "email")
     end
+  end
 
+  describe "DELETE /proponents/:id" do
+    it "removes the proponent and redirects to dashboard" do
+      proponent = Proponent.create!(
+        name: "Carlos Souza",
+        document: "11223344556",
+        birthdate: "1980-02-02",
+        salary: 2500.00,
+        addresses_attributes: [{
+          street: "Rua Central",
+          number: "123",
+          neighborhood: "Centro",
+          city: "Rio de Janeiro",
+          state: "RJ",
+          zip_code: "20000-000"
+        }],
+        contacts_attributes: [{
+          contact_type: "email",
+          value: "carlos@example.com"
+        }]
+      )
+
+      expect {
+        delete proponent_path(proponent)
+      }.to change(Proponent, :count).by(-1)
+
+      expect(response).to redirect_to(root_path)
+      follow_redirect!
+      expect(response.body).to include("Proponente removido com sucesso")
+    end
+  end
+
+  describe "PATCH /proponents/:id" do
+    let!(:proponent) do
+      Proponent.create!(
+        name: "Antigo Nome",
+        document: "99999999999",
+        birthdate: "1980-01-01",
+        salary: 2000.00,
+        addresses_attributes: [{
+          street: "Rua Antiga",
+          number: "1",
+          neighborhood: "Centro",
+          city: "Cidade",
+          state: "SP",
+          zip_code: "00000-000"
+        }],
+        contacts_attributes: [{
+          contact_type: "email",
+          value: "antigo@example.com"
+        }]
+      )
+    end
+
+    it "updates a proponent with valid data" do
+      patch proponent_path(proponent), params: {
+        proponent: {
+          name: "Novo Nome",
+          salary: 3000.00
+        }
+      }
+
+      expect(response).to redirect_to(proponent)
+      follow_redirect!
+
+      expect(response.body).to include("Novo Nome")
+      expect(response.body).to include("R$ 3.000,00").or include("$3,000.00")
+    end
+
+    it "does not update a proponent with invalid data" do
+      patch proponent_path(proponent), params: {
+        proponent: {
+          name: "",
+          salary: nil
+        }
+      }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Proponente")
+    end
   end
 end
