@@ -51,6 +51,8 @@ gem 'chartkick'
 gem 'groupdate'
 gem 'kaminari'
 gem 'kaminari-bootstrap'
+gem 'sidekiq'
+gem 'whenever', require: false
 
 
 group :development, :test do
@@ -61,6 +63,7 @@ group :development, :test do
   gem 'faker'
   gem 'pry-byebug'
   gem 'pry-rails'
+  gem 'dotenv-rails'
 end
 
 group :development do
