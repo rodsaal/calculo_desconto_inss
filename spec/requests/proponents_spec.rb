@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe "Proponents", type: :request do
+  let(:user) { User.create!(email: "test@example.com", password: "123456") }
+
+  before do
+    sign_in user
+  end
+  
   describe "POST /proponents" do
     let(:valid_params) do
       {
