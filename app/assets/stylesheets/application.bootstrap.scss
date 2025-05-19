@@ -1,2 +1,24 @@
-@import 'bootstrap/scss/bootstrap';
-@import 'bootstrap-icons/font/bootstrap-icons';
+@use 'bootstrap/scss/bootstrap' with (
+  $primary: #4a6baf,
+  $secondary: #6c757d
+);
+@use 'bootstrap-icons/font/bootstrap-icons';
+
+.pagination {
+  margin-top: 2rem;
+
+  .page-item {
+    &.active .page-link {
+      background-color: #4a6baf;
+      border-color: #4a6baf;
+    }
+    
+    .page-link {
+      color: #4a6baf;
+      
+      &:hover {
+        color: darken(#4a6baf, 10%);
+      }
+    }
+  }
+}

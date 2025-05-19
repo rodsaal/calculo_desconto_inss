@@ -1,2 +1,28 @@
-h1 Home#index
-p Find me in app/views/home/index.html.slim
+.container.mt-5
+  h1.mb-4 Dashboard de Proponentes
+
+  h3.mb-3 Distribuição por Faixa Salarial
+  = pie_chart @salary_distribution, height: "300px", library: { title: { text: "INSS Faixas", display: true } }
+
+  hr
+
+  h3.mt-5.mb-3 Últimos Proponentes
+
+  table.table.table-bordered
+    thead
+      tr
+        th Nome
+        th CPF
+        th Salário
+        th Desconto INSS
+    tbody
+      - @proponents.each do |p|
+        tr
+          td = p.name
+          td = p.document
+          td = number_to_currency(p.salary, unit: "R$ ")
+          td = number_to_currency(p.inss_discount, unit: "R$ ")
+
+  .d-flex.justify-content-center
+    = paginate @proponents, theme: 'bootstrap'
+

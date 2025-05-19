@@ -1,0 +1,17 @@
+nav aria-label="Page navigation"
+  ul.pagination.justify-content-center
+    / Previous page
+    li.page-item class=('disabled' unless @proponents.prev_page)
+      = link_to raw('&laquo;'), url_for(page: @proponents.prev_page), class: 'page-link', aria: { label: 'Previous' }
+
+    / Page numbers
+    - each_page = @proponents.total_pages.times.map { |i| i+1 }
+    - each_page.each do |page|
+      - window_page = page.between?(@proponents.current_page - 2, @proponents.current_page + 2)
+      - if window_page || page == 1 || page == @proponents.total_pages
+        li.page-item class=('active' if page == @proponents.current_page)
+          = link_to page, url_for(page: page), class: 'page-link'
+
+    / Next page
+    li.page-item class=('disabled' unless @proponents.next_page)
+      = link_to raw('&raquo;'), url_for(page: @proponents.next_page), class: 'page-link', aria: { label: 'Next' }
