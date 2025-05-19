@@ -1,4 +1,6 @@
 class ProponentsController < ApplicationController
+  before_action :authenticate_user!
+  
     def new
       @proponent = Proponent.new
       @proponent.addresses.build

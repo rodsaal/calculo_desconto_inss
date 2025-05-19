@@ -53,6 +53,7 @@ gem 'kaminari'
 gem 'kaminari-bootstrap'
 gem 'sidekiq'
 gem 'whenever', require: false
+gem 'devise'
 
 
 group :development, :test do
