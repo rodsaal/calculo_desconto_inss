@@ -5,6 +5,7 @@
   = pie_chart @salary_distribution, height: "300px", library: { title: { text: "INSS Faixas", display: true } }
 
   hr
+  = link_to "Novo Proponente", new_proponent_path, class: "btn btn-success mb-3"
 
   h3.mt-5.mb-3 Últimos Proponentes
 
@@ -15,6 +16,7 @@
         th CPF
         th Salário
         th Desconto INSS
+        th Ações
     tbody
       - @proponents.each do |p|
         tr
@@ -22,6 +24,25 @@
           td = p.document
           td = number_to_currency(p.salary, unit: "R$ ")
           td = number_to_currency(p.inss_discount, unit: "R$ ")
+          td
+            = link_to 'Ver', proponent_path(p), class: 'btn btn-outline-info btn-sm me-2'
+            = link_to 'Editar', edit_proponent_path(p), class: 'btn btn-outline-warning btn-sm me-2'
+            button.btn.btn-outline-danger.btn-sm data-bs-toggle="modal" data-bs-target="#deleteModal-#{p.id}" Excluir
+
+
+            / Modal de Confirmação
+            .modal.fade id="deleteModal-#{p.id}" tabindex="-1" aria-labelledby="deleteModalLabel-#{p.id}" aria-hidden="true"
+              .modal-dialog
+                .modal-content
+                  .modal-header
+                    h5.modal-title id="deleteModalLabel-#{p.id}" Confirmar Exclusão
+                    button.btn-close type="button" data-bs-dismiss="modal" aria-label="Fechar"
+                  .modal-body
+                    | Tem certeza que deseja remover o proponente "#{p.name}"?
+                  .modal-footer
+                    button.btn.btn-secondary type="button" data-bs-dismiss="modal" Cancelar
+                    = button_to 'Remover', proponent_path(p), method: :delete, form: { class: 'd-inline' }, class: 'btn btn-danger'
+
 
   .d-flex.justify-content-center
     = paginate @proponents, theme: 'bootstrap'

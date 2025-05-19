@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :proponents, only: [:new, :create, :show]
+  resources :proponents
 
   get 'inss_discount', to: 'inss#calculate'
 

@@ -1,13 +1,55 @@
-h1 Proponent created
+.container.mt-5
+  .row
+    .col-md-12
+      h1.mb-4 Detalhes do Proponente
 
-p
-  strong Name:
-  = @proponent.name
+      .card.mb-4
+        .card-body
+          h4.card-title = @proponent.name
+          p
+            strong CPF:
+            |  #{@proponent.document}
+          p
+            strong Data de Nascimento:
+            = " #{l(@proponent.birthdate, format: :long)}"
+          p
+            strong Salário:
+            = " #{number_to_currency(@proponent.salary, unit: 'R$')}"
+          p
+            strong Desconto INSS:
+            = " #{number_to_currency(@proponent.inss_discount, unit: 'R$')}"
 
-p
-  strong Salary:
-  = number_to_currency(@proponent.salary)
+      - if @proponent.addresses.any?
+        h4.mt-4 Endereços
+        - @proponent.addresses.each do |address|
+          .card.mb-3
+            .card-body
+              p.mb-1
+                strong Rua:
+                = " #{address.street}"
+              p.mb-1
+                strong Número:
+                = " #{address.number}"
+              p.mb-1
+                strong Bairro:
+                = " #{address.neighborhood}"
+              p.mb-1
+                strong Cidade:
+                = " #{address.city}"
+              p.mb-1
+                strong Estado:
+                = " #{address.state}"
+              p.mb-1
+                strong CEP:
+                = " #{address.zip_code}"
 
-p
-  strong INSS Discount:
-  = number_to_currency(@proponent.inss_discount)
+      - if @proponent.contacts.any?
+        h4.mt-4 Contatos
+        ul.list-group
+          - @proponent.contacts.each do |contact|
+            li.list-group-item
+              strong = contact.contact_type.capitalize
+              | : #{contact.value}
+
+      .mt-4.mb-5
+        = link_to "Voltar", root_path, class: "btn btn-success"

@@ -1,0 +1,10 @@
+.container.mt-5.mb-5
+  .row.justify-content-center
+    .col-md-8
+      .d-flex.justify-content-end.mb-3
+        = link_to "Voltar", root_path, class: "btn btn-success"
+
+      h1.mb-4 Editar Proponente
+
+      = form_with model: @proponent, url: proponent_path(@proponent), method: :patch, local: true, data: { controller: "inss" } do |f|
+        = render "form", f: f, submit_text: "Atualizar Proponente"
