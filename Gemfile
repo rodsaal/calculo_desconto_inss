@@ -51,6 +51,8 @@ gem 'chartkick'
 gem 'groupdate'
 gem 'kaminari'
 gem 'kaminari-bootstrap'
+gem 'sidekiq'
+gem 'whenever', require: false
 
 
 group :development, :test do
@@ -61,11 +63,14 @@ group :development, :test do
   gem 'faker'
   gem 'pry-byebug'
   gem 'pry-rails'
+  gem 'dotenv-rails'
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
