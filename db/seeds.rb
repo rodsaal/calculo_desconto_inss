@@ -5,6 +5,16 @@ Proponent.destroy_all
 Address.destroy_all
 Contact.destroy_all
 
+puts "Criando usuário administrador"
+
+User.create!(
+  email: "admin@example.com",
+  password: "admin@123",
+  password_confirmation: "admin@123"
+)
+
+puts "Usuário admin criado: admin@example.com / admin@123 ✅"
+
 puts "Criando proponentes..."
 
 100.times do
