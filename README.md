@@ -1,6 +1,6 @@
 # README
 
-# Desafio Técnico Ruby on Rails – Impulso / Credshop
+# Desafio Técnico Ruby on Rails – Impulso / Credishop
 
 Este é o resultado do desafio técnico proposto pela Impulso / Credshop, implementado em Ruby on Rails 7 com foco em boas práticas, testes automatizados e experiência do usuário.
 
